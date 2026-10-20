@@ -4,6 +4,7 @@ import type { ProducerRepository } from '../repositories/producer-repository.js'
 import { errorHandler, notFoundHandler } from './middlewares/error-handler.js';
 import { movieRoutes } from './routes/movie-routes.js';
 import { producerRoutes } from './routes/producer-routes.js';
+import { rootRoutes } from './routes/root-routes.js';
 
 export interface AppDependencies {
   movies: MovieRepository;
@@ -16,6 +17,7 @@ export function createHttpApp({ movies, producers }: AppDependencies): Express {
   app.disable('x-powered-by');
   app.set('json spaces', 2);
 
+  app.use('/', rootRoutes());
   app.use('/movies', movieRoutes(movies));
   app.use('/producers', producerRoutes(producers));
 
